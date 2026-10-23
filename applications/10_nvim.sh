@@ -2,7 +2,7 @@ is_package_installed "vim" || install_package "vim"
 is_package_installed "npm" || install_package "npm"
 
 if $DEBIAN; then
-    sudo add-apt-repository ppa:neovim-ppa/stable
+    sudo add-apt-repository -y ppa:neovim-ppa/stable
     sudo apt update
     is_package_installed "neovim" || install_package "neovim"
 fi

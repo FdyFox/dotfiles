@@ -12,9 +12,10 @@
 
 	pom = push origin master
 	acp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
+	permission-reset = !git diff -p -R --no-ext-diff --no-color --diff-filter=M | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply
 
 [user]
-	name = Ferdyversee
+	name = FdyFox
 	email = github@berger-em.de
 
 [core]
@@ -42,3 +43,9 @@
 
 [url "git@github.com:"]
   insteadof = "gh:"
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

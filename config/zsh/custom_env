@@ -9,3 +9,9 @@ export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 # CachyOS Wayland Proton
 export PROTON_ENABLE_WAYLAND=1
+
+# Check for WSL
+if [[ $(uname -r) =~ WSL ]]; then
+  # WSL detected
+  export SSH_SK_HELPER="/mnt/c/Program Files/OpenSSH/ssh-sk-helper.exe"
+fi
