@@ -1,0 +1,12 @@
+# Global mise tools, symlinked to ~/.config/mise/config.toml by applications/10_mise.sh
+# `mise use -g <tool>` writes here as well.
+[tools]
+python = "3.13"
+go = "latest"
+uv = "latest"
+ruff = "latest"
+golangci-lint = "latest"
+hadolint = "latest"
+hugo-extended = "latest"
+shellcheck = "latest"
+shfmt = "latest"

@@ -1,0 +1,29 @@
+# Extensions available in both marketplaces (Open VSX + Microsoft)
+# Installed into code-server by applications/10_vscode_server.sh
+
+# Python
+charliermarsh.ruff
+detachhead.basedpyright
+ms-python.python
+
+# Go
+golang.go
+
+# Docker / YAML / TOML
+ms-azuretools.vscode-docker
+exiasr.hadolint
+redhat.vscode-yaml
+tamasfe.even-better-toml
+
+# Shell
+timonwong.shellcheck
+foxundermoon.shell-format
+
+# Markdown / Hugo
+yzhang.markdown-all-in-one
+davidanson.vscode-markdownlint
+budparr.language-hugo-vscode
+
+# General
+eamodio.gitlens
+editorconfig.editorconfig

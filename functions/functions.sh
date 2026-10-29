@@ -1,5 +1,7 @@
 # Function to ensure sudo access
 has_sudo_access() {
+    # Try NOPASSWD first: "sudo -v" asks for a password unless *all* sudoers entries are NOPASSWD
+    sudo -n true 2>/dev/null && return 0
     sudo -v && return 0 || return 1
 }
 

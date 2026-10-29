@@ -1,0 +1,5 @@
+# Extensions only in the Microsoft marketplace (Remote-SSH only)
+# Not installed by script: add them to "remote.SSH.defaultExtensions" in the local VS Code settings.
+# Do not combine Pylance with basedpyright, you get duplicate diagnostics.
+
+# ms-python.vscode-pylance
