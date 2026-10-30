@@ -7,7 +7,7 @@ create_symlink "$SCRIPT_DIR/config/git/hooks" "$HOME/.config/git/hooks"
 
 ensure_directories "$HOME/src/"
 
-if $DEBIAN; then
+if $DEBIAN && [ "$SERVER" != true ]; then
   if [ ! -f "/usr/local/bin/git-credential-manager" ]; then
     LATEST_VERSION=$(get_latest_version "git-ecosystem" "git-credential-manager")
     wget https://github.com/git-ecosystem/git-credential-manager/releases/download/v${LATEST_VERSION}/gcm-linux_amd64.${LATEST_VERSION}.deb -O /tmp/gcm.deb

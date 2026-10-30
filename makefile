@@ -3,13 +3,16 @@
 # Default script
 BOOTSTRAP := ./bootstrap.sh
 
-.PHONY: all work update run-gnome run-hyprland help
+.PHONY: all work server update run-gnome run-hyprland help
 
 all:
 	$(BOOTSTRAP)
 
 work:
 	$(BOOTSTRAP) --work
+
+server:
+	$(BOOTSTRAP) --server
 
 install_hyperland:
 	@echo "Running Hyprland setup"
@@ -26,6 +29,7 @@ help:
 	@echo "Targets:"
 	@echo "  all                 Run full bootstrap"
 	@echo "  work                Run work setup"
+	@echo "  server              Run minimal setup for remote servers"
 	@echo "  install_hyprland    Run Hyprland-specific setup"
 	@echo "  install_kde         Run KDE-specific setup"
 

@@ -17,7 +17,7 @@ Use the Template function from GitHub and create your own version of this repo a
 Clone this repository to your home directory and run the bootstrap script:
 
 ```bash
-git clone https://github.com/Brazier85/dotfiles.git ~/.dotfiles \
+git clone https://github.com/FdyFox/dotfiles_bash.git ~/.dotfiles \
 && cd ~/.dotfiles \
 && ./bootstrap.sh
 ```
@@ -26,6 +26,7 @@ git clone https://github.com/Brazier85/dotfiles.git ~/.dotfiles \
 The script offers flexible options to tailor the setup process to your needs:
 
 - `--work`: Applies `.work`-specific configurations if they exist, making it ideal for setting up a work environment.
+- `--server`: Minimal setup for remote/headless servers (see below).
 - `--run-all`: Automatically runs all scripts in the specified directories without prompting for confirmation on scripts numbered 50 or above.
 - `--file`: Enter the name of a single file like `git` and it will only run this file.
 
@@ -36,6 +37,25 @@ The script offers flexible options to tailor the setup process to your needs:
 
 ./bootstrap.sh --file zsh
 ```
+
+### Server Mode
+For remote servers only the basics are installed. Clone via https (servers usually have no GitHub SSH key) and run:
+
+```bash
+git clone https://github.com/FdyFox/dotfiles_bash.git ~/.dotfiles \
+&& ~/.dotfiles/bootstrap.sh --server
+```
+
+In server mode only the scripts listed in `server_scripts` in `bootstrap.sh` are executed:
+
+- `00_basic_server.sh`: git, curl, zsh, tmux, vim, htop, btop, ripgrep, fd, bat, ... and the vimrc
+- `10_git.sh`: gitconfig and hooks (without git-credential-manager)
+- `10_zsh.sh`: oh-my-zsh with `zshrc.server`, `alias.server` and `custom_env.server`
+- `10_starship.sh`, `10_tmux.sh`
+- `10_vscode_server.sh`: VS Code settings for Remote-SSH / code-server
+- `99_cleanup.sh`: keeps the https remote
+
+No GUI tools, no neovim/LazyVim, no mise, no 1Password, no SSH config.
 
 ### What the Script Does
 - **Environment Detection:** Automatically detects your Linux distribution, whether you're running on WSL, and if you're using the GNOME desktop environment.

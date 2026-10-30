@@ -51,8 +51,20 @@ IS_ONLINE=true
 HOSTNAME=$(hostname)
 CONFIG_FILE="$SCRIPT_DIR/config/hosts/${HOSTNAME}.conf"
 
-# Make sure $WORK is unset
+# Make sure $WORK and $SERVER are unset
 unset WORK
+unset SERVER
+
+# Scripts that run in --server mode (everything else is skipped)
+server_scripts=(
+  "00_basic_server.sh"
+  "10_git.sh"
+  "10_zsh.sh"
+  "10_starship.sh"
+  "10_tmux.sh"
+  "10_vscode_server.sh"
+  "99_cleanup.sh"
+)
 
 # Base config dir
 CONFIG_DIR="$SCRIPT_DIR/config"
@@ -64,6 +76,10 @@ while [[ $# -gt 0 ]]; do
   case $1 in
   --work)
     WORK=true
+    shift # Move to the next argument
+    ;;
+  --server)
+    SERVER=true
     shift # Move to the next argument
     ;;
   --run-all)
@@ -87,6 +103,7 @@ main() {
   log "INFO" "Running Gnome: $RUNNING_GNOME"
   log "INFO" "Running Hyprland: $RUNNING_HYPRLAND"
   log "INFO" "Running KDE: $RUNNING_KDE"
+  log "INFO" "Server mode: ${SERVER:-false}"
 
   # Are we online
   check_online

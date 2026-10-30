@@ -4,6 +4,10 @@
   "files.insertFinalNewline": true,
   "workbench.startupEditor": "none",
   "telemetry.telemetryLevel": "off",
+  "workbench.colorTheme": "Dark 2026",
+  "keyboard.layout": "de",
+  "claudeCode.hideOnboarding": true,
+  "git.defaultCloneDirectory": "~/src",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.codeActionsOnSave": {

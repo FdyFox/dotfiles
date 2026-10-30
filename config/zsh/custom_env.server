@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Custom env variables for servers
+export EDITOR=vim

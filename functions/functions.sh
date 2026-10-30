@@ -192,6 +192,12 @@ run_scripts_in_directory() {
                 continue
             fi
 
+            # In server mode only whitelisted scripts are executed
+            if [[ "$SERVER" == true ]] && ! is_server_script "$script_name"; then
+                log "DEBUG" "Skipping $script_name (not a server script)"
+                continue
+            fi
+
             # If RUN_ALL is true, source the script directly
             if [[ "$run_all" == true ]]; then
                 log "INFO" "RUN_ALL is set. Running $script_name"
@@ -318,6 +324,17 @@ is_blacklisted() {
         fi
     done
     return 1 # Script is not blacklisted
+}
+
+# Function to check if a script is allowed in server mode
+is_server_script() {
+    local script_name="$1"
+    for server_script in "${server_scripts[@]}"; do
+        if [[ "$script_name" == "$server_script" ]]; then
+            return 0
+        fi
+    done
+    return 1
 }
 
 # Function to check for internet connectivity

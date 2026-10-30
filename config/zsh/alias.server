@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# General aliases
+source $HOME/.dotfiles/config/zsh/alias.general
+
+# Debian/Ubuntu ship bat and fd under other names
+if which batcat >/dev/null; then
+  alias cat="batcat"
+fi
+
+if which fdfind >/dev/null; then
+  alias fd="fdfind"
+fi
+
+# Update dotfiles
+alias dotfiles="cd $HOME/.dotfiles/; ./bootstrap.sh --server; cd -"

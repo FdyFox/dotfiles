@@ -9,7 +9,7 @@ if $ARCH; then
     is_package_installed "starship" || install_package starship
 fi
 
-if $UBUNTU || $DEBIAN; then
+if $DEBIAN; then
     if [ ! -f "/usr/local/bin/starship" ]; then
         curl -sS https://starship.rs/install.sh | sh -s -- -y
     fi
