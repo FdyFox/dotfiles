@@ -1,6 +1,14 @@
 
 # Minimal zshrc for remote servers (bootstrap.sh --server)
 
+# Many servers default to LANG=C (or get an unknown locale via SSH).
+# Without UTF-8 zsh prints icons and powerline symbols as "?".
+if [[ "$(locale charmap 2>/dev/null)" != "UTF-8" ]]; then
+  export LANG=C.UTF-8
+  export LC_CTYPE=C.UTF-8
+  unset LC_ALL
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
