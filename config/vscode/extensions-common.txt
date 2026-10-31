@@ -24,6 +24,12 @@ yzhang.markdown-all-in-one
 davidanson.vscode-markdownlint
 budparr.language-hugo-vscode
 
+# AI
+anthropic.claude-code
+
+# Language
+ms-ceintl.vscode-language-pack-de
+
 # General
 eamodio.gitlens
 editorconfig.editorconfig

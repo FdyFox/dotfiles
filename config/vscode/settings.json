@@ -6,7 +6,7 @@
   "telemetry.telemetryLevel": "off",
   "workbench.colorTheme": "Dark 2026",
   "keyboard.layout": "de",
-  "terminal.integrated.fontFamily": "'MesloLGS NF', 'MonaspiceRn Nerd Font Mono', 'UbuntuMono Nerd Font', monospace",
+  "terminal.integrated.fontFamily": "'MonaspiceRn NFM', 'MonaspiceRn Nerd Font Mono', 'MesloLGS NF', 'UbuntuMono Nerd Font', monospace",
   "claudeCode.hideOnboarding": true,
   "git.defaultCloneDirectory": "~/src",
   "[python]": {

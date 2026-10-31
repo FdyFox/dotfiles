@@ -16,6 +16,16 @@ for settings in \
     create_symlink "$VSCODE_CONFIG/settings.json" "$settings"
 done
 
+# UI language for code-server (needs the language pack from extensions-common.txt).
+# Remote-SSH uses the display language of the local VS Code.
+argv="$HOME/.local/share/code-server/User/argv.json"
+ensure_directories "$(dirname "$argv")"
+if [ -f "$argv" ] && [ ! -L "$argv" ]; then
+    log "WARNING" "Backing up existing $argv"
+    mv "$argv" "$argv.bak"
+fi
+create_symlink "$VSCODE_CONFIG/argv.json" "$argv"
+
 # Common extensions for code-server.
 # Remote-SSH extensions are installed by "remote.SSH.defaultExtensions" in the local VS Code,
 # because the ~/.vscode-server binary path changes with every VS Code version.
