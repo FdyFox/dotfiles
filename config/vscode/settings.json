@@ -5,8 +5,17 @@
   "workbench.startupEditor": "none",
   "telemetry.telemetryLevel": "off",
   "workbench.colorTheme": "Dark 2026",
+<<<<<<< Updated upstream
   "keyboard.layout": "00000407",
+=======
+<<<<<<< Updated upstream
+  "keyboard.layout": "de",
+>>>>>>> Stashed changes
   "terminal.integrated.fontFamily": "'MonaspiceRn NFM', 'MonaspiceRn Nerd Font Mono', 'MesloLGS NF', 'UbuntuMono Nerd Font', monospace",
+=======
+  "keyboard.layout": "00000407",
+  "terminal.integrated.fontFamily": "'MesloLGS NF', 'MonaspiceRn Nerd Font Mono', 'UbuntuMono Nerd Font', monospace",
+>>>>>>> Stashed changes
   "claudeCode.hideOnboarding": true,
   "git.defaultCloneDirectory": "~/src",
   "[python]": {
@@ -25,5 +34,26 @@
   "[markdown]": {
     "editor.wordWrap": "on",
     "files.trimTrailingWhitespace": false
-  }
+  },
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "/usr/bin/zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "zsh"
 }
