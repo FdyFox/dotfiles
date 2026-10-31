@@ -18,8 +18,8 @@ DISABLE_AUTO_UPDATE="true"
 # Enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-# Keep plugins small: no gpg-agent, 1password or pyautoenv on servers
-plugins=(git zsh-autosuggestions z sudo)
+# Keep plugins small: no gpg-agent, 1password on servers
+plugins=(git zsh-autosuggestions z sudo pyautoenv direnv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,4 +42,9 @@ export PATH
 # Enable starship
 if command -v starship >/dev/null; then
   eval "$(starship init zsh)"
+fi
+
+# Enable mise
+if [ -x "$HOME/.local/bin/mise" ]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
 fi
