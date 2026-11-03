@@ -27,6 +27,9 @@ if $FEDORA; then
     google-noto-color-emoji-fonts
     google-noto-emoji-fonts
     jetbrains-mono-fonts
+    liberation-sans-fonts
+    liberation-serif-fonts
+    liberation-mono-fonts
   )
 
   for PKG1 in "${fonts[@]}"; do
@@ -36,6 +39,11 @@ if $FEDORA; then
       exit 1
     fi
   done
+fi
+
+# Liberation: maßgleich zu Arial / Times New Roman / Courier New (Windows-Look im Browser)
+if $ARCH; then
+  is_package_installed "ttf-liberation" || install_package "ttf-liberation"
 fi
 
 # jetbrains nerd font. Necessary for waybar
@@ -67,6 +75,11 @@ fi
 if ! command -v fc-cache &>/dev/null; then
   is_package_installed "fontconfig" || install_package "fontconfig"
 fi
+
+# Fontconfig: bevorzugte Schriften und Emoji-Fallback
+ensure_directories "$HOME/.config/fontconfig"
+log "INFO" "Copy file: $SCRIPT_FONT_DIR/fonts.conf"
+cp "$SCRIPT_FONT_DIR/fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
 
 log "INFO" "Updating font cache"
 fc-cache

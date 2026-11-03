@@ -24,4 +24,3 @@ rebind("SUPER + SHIFT + plus", hl.dsp.window.resize({ x = 0, y = 100, relative =
 
 -- Wallpaper-Karussell auf SUPER + W
 rebind("SUPER + W", hl.dsp.exec_cmd("dms ipc call wallpaperCarousel toggle"))
-
