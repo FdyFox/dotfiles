@@ -1,7 +1,20 @@
 # NVIDIA settings
 if $ARCH; then
+    # Kernelmodul: CachyOS liefert vorgebaute Module (linux-cachyos-nvidia-open),
+    # die chwd bei der Installation einrichtet. Nur wenn noch gar kein
+    # NVIDIA-Modul installiert ist, nvidia-open-dkms (Turing/RTX 20xx und neuer)
+    # samt Headern für alle installierten Kernel nachziehen.
+    if pacman -Qq | grep -qE '^(nvidia(-open)?(-beta)?(-dkms)?|linux-.+-nvidia(-open)?)$'; then
+        log "INFO" "NVIDIA kernel module already installed, skipping nvidia-open-dkms"
+    else
+        for pkgbase in /usr/lib/modules/*/pkgbase; do
+            headers="$(cat "$pkgbase")-headers"
+            is_package_installed "$headers" || install_package "$headers"
+        done
+        install_package nvidia-open-dkms
+    fi
+
     packages=(
-        nvidia-dkms
         nvidia-utils
         lib32-nvidia-utils
         nvidia-settings
@@ -14,11 +27,44 @@ if $ARCH; then
         fi
     done
 
-    echo "force_drivers+=\" nvidia nvidia_modeset nvidia_uvm nvidia_drm \"" | sudo tee -a /etc/dracut.conf.d/nvidia.conf
-    echo "options nvidia_drm modeset=1 fbdev=1" | sudo tee -a /etc/modprobe.d/nvidia.conf
+    # Schreibt eine Root-Datei nur bei Änderung; Rückgabe 0 = geändert
+    write_root_file() {
+        local path="$1" content="$2"
+        if [ -f "$path" ] && [ "$(cat "$path")" = "$content" ]; then
+            return 1
+        fi
+        sudo mkdir -p "$(dirname "$path")"
+        printf '%s\n' "$content" | sudo tee "$path" >/dev/null
+        log "SUCCESS" "Wrote $path"
+    }
 
-    sudo dracut-rebuild
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    initramfs_changed=false
+
+    write_root_file /etc/modprobe.d/nvidia.conf "options nvidia_drm modeset=1 fbdev=1" &&
+        initramfs_changed=true
+
+    # Early KMS: NVIDIA-Module ins Initramfs (mkinitcpio = CachyOS-Standard, dracut optional)
+    if command -v mkinitcpio &>/dev/null; then
+        write_root_file /etc/mkinitcpio.conf.d/nvidia.conf "MODULES+=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)" &&
+            initramfs_changed=true
+    fi
+    if command -v dracut &>/dev/null; then
+        write_root_file /etc/dracut.conf.d/nvidia.conf 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' &&
+            initramfs_changed=true
+    fi
+
+    # Initramfs neu bauen; Bootloader-Einträge (Limine/systemd-boot/GRUB) brauchen
+    # keine Anpassung, da die Optionen über modprobe.d gesetzt werden.
+    if $initramfs_changed; then
+        if command -v mkinitcpio &>/dev/null; then
+            sudo mkinitcpio -P
+        elif command -v dracut-rebuild &>/dev/null; then
+            sudo dracut-rebuild
+        elif command -v dracut &>/dev/null; then
+            sudo dracut --regenerate-all --force
+        fi
+        log "INFO" "NVIDIA initramfs updated, reboot required"
+    fi
 fi
 
 if $FEDORA; then

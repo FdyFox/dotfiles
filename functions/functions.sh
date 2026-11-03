@@ -455,3 +455,35 @@ reboot_prompt() {
         log "ERROR" "Whiptail is not installed. Unable to show reboot prompt."
     fi
 }
+
+# Add the official 1Password package repository (idempotent).
+# Provides both "1password" (app) and "1password-cli" (op).
+setup_1password_repo() {
+    case "$BASE_DISTRO" in
+    debian)
+        [ -f /etc/apt/sources.list.d/1password.list ] && return 0
+        log "INFO" "Adding 1Password apt repository"
+        curl -sS https://downloads.1password.com/linux/keys/1password.asc |
+            sudo gpg --dearmor --yes --output /usr/share/keyrings/1password-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" |
+            sudo tee /etc/apt/sources.list.d/1password.list >/dev/null
+        sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+        curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol |
+            sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol >/dev/null
+        sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+        curl -sS https://downloads.1password.com/linux/keys/1password.asc |
+            sudo gpg --dearmor --yes --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+        update_cache
+        ;;
+    fedora)
+        [ -f /etc/yum.repos.d/1password.repo ] && return 0
+        log "INFO" "Adding 1Password rpm repository"
+        sudo rpm --import https://downloads.1password.com/linux/keys/1password.asc
+        sudo sh -c 'echo -e "[1password]\nname=1Password Stable Channel\nbaseurl=https://downloads.1password.com/linux/rpm/stable/\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=\"https://downloads.1password.com/linux/keys/1password.asc\"" > /etc/yum.repos.d/1password.repo'
+        ;;
+    arch)
+        # AUR-Pakete prüfen die Signatur mit dem 1Password-Key
+        curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --import --quiet 2>/dev/null
+        ;;
+    esac
+}

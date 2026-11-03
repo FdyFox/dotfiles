@@ -1,6 +1,0 @@
-{
-    "hyprland/submap": {
-        "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
-        "tooltip": false,
-    }
-}

@@ -8,7 +8,6 @@ if $ARCH; then
         bat
         eza
         starship
-        neovim
         lazygit
         libnewt
 		yay

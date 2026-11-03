@@ -2,7 +2,6 @@
 
 echo "Removing files and folders"
 rm -rf config/git/gitconfig.work
-rm -rf config/gnome/*
 rm -rf config/scripts/backup_script.conf
 rm -rf config/scripts/k8s_config.sh
 rm -rf config/ssh/*
@@ -16,7 +15,6 @@ rm -rf config/kde/*
 
 echo "Add keep and dummy files"
 touch config/git/gitconfig.work
-touch config/gnome/.gitkeep
 touch config/ssh/config
 touch config/ssh/config.work
 touch config/zsh/alias
@@ -126,7 +124,7 @@ Description=Olm
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/olm --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+ExecStart=/usr/local/bin/olm --id <OLM_ID> --secret <OLM_SECRET> --endpoint https://pangolin.example.com
 Restart=always
 User=root
 

@@ -4,8 +4,6 @@ if $FEDORA; then
         whiptail
         eza
         bat
-        neovim
-        variety
         dnf-plugins-core
     )
 

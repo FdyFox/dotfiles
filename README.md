@@ -9,12 +9,18 @@ This repo includes some dummy files like `config/zsh/alias` and all `.work`. The
 
 ## Getting Started
 
-### Prerequisites
-Ensure you have `git` installed on your system before proceeding.
-
 ### Installation
-Use the Template function from GitHub and create your own version of this repo and then follow the steps below with your custom url. I recommend using a private repo!
-Clone this repository to your home directory and run the bootstrap script:
+On a fresh machine run the installer. It installs `git` and the GitHub CLI, logs in to GitHub via device code (open https://github.com/login/device on any device, e.g. your phone, and enter the shown code), clones the private repo to `~/.dotfiles` and starts `bootstrap.sh`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/FdyFox/dotfiles/main/install.sh | bash
+```
+
+Arguments are passed on to `bootstrap.sh`, e.g. `... | bash -s -- --work`.
+
+Use the Template function from GitHub to create your own version of this repo and adjust `REPO` in `install.sh`. I recommend using a private repo!
+
+Manual alternative (needs `git` and access to the repo):
 
 ```bash
 git clone https://github.com/FdyFox/dotfiles_bash.git ~/.dotfiles \
@@ -39,11 +45,10 @@ The script offers flexible options to tailor the setup process to your needs:
 ```
 
 ### Server Mode
-For remote servers only the basics are installed. Clone via https (servers usually have no GitHub SSH key) and run:
+For remote servers only the basics are installed. The repo stays on https (servers usually have no GitHub SSH key):
 
 ```bash
-git clone https://github.com/FdyFox/dotfiles_bash.git ~/.dotfiles \
-&& ~/.dotfiles/bootstrap.sh --server
+curl -fsSL https://raw.githubusercontent.com/FdyFox/dotfiles/main/install.sh | bash -s -- --server
 ```
 
 In server mode only the scripts listed in `server_scripts` in `bootstrap.sh` are executed:
@@ -55,7 +60,7 @@ In server mode only the scripts listed in `server_scripts` in `bootstrap.sh` are
 - `10_vscode_server.sh`: VS Code settings for Remote-SSH / code-server
 - `99_cleanup.sh`: keeps the https remote
 
-No GUI tools, no neovim/LazyVim, no mise, no 1Password, no SSH config.
+No GUI tools, no mise, no 1Password, no SSH config.
 
 ### What the Script Does
 - **Environment Detection:** Automatically detects your Linux distribution, whether you're running on WSL, and if you're using the GNOME desktop environment.

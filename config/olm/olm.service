@@ -3,7 +3,7 @@ Description=Olm
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/olm --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+ExecStart=/usr/local/bin/olm --id <OLM_ID> --secret <OLM_SECRET> --endpoint https://pangolin.example.com
 Restart=always
 User=root
 

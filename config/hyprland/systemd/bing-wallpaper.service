@@ -1,0 +1,7 @@
+[Unit]
+Description=Bing-Bild des Tages als Dux-Wallpaper
+After=dms.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypr/scripts/bing-wallpaper.sh

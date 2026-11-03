@@ -7,3 +7,7 @@ if $DEBIAN; then
         install_package gh
     fi
 fi
+
+if $ARCH; then
+    is_package_installed "github-cli" || install_package github-cli
+fi

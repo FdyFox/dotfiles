@@ -55,7 +55,7 @@ ENABLE_CORRECTION="true"
 plugins=(git gpg-agent zsh-autosuggestions z tmux pyautoenv 1password sudo direnv)
 
 # Autostart TMUX
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 
 source $ZSH/oh-my-zsh.sh
 

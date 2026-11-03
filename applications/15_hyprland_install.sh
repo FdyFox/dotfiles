@@ -1,86 +1,52 @@
-# Install Hyprland
+# Install Hyprland (Lua config) + Dux Shell
 
 copr_pkgs=(
-  errornointernet/packages
   solopasha/hyprland
-  erikreider/SwayNotificationCenter
+  duxlabs/dms
 )
 
 packages_fedora=(
   hyprland
+  xdg-desktop-portal-hyprland
+  dms
+  matugen
   kitty
-  hyprlock
-  hypridle
-  rofi
-  SwayNotificationCenter
-  swww
-  pyprland
-  wallust
-  waybar
   wl-clipboard
-  wlogout
-  sddm
-  pamixer
-  pavucontrol
-  grim
-  slurp
-  thunar
-  qt6-5compat
-  qt6-declarative
-  qt6-qtsvg
+  xclip
 )
 
 packages_arch=(
   hyprland
-  #waybar
-  rofi
-  #swaync
-  hyprlock
-  hypridle
   xdg-desktop-portal-hyprland
-  #sddm
+  xdg-desktop-portal-gtk
+  dux-shell
+  matugen
+  cava
+  qt6-multimedia
   kitty
-  #qt5-wayland
-  #qt6-wayland
-  #qt6-5compat
-  #qt6-declarative
-  #qt6-svg
-  #cliphist
-  thunar
-  thunar-volman
-  thunar-archive-plugin
-  #network-manager-applet
-  blueman
-  brightnessctl
-  slurp
-  grim
-  #xclip
-  #swappy
-  #gnome-themes-extra
-  #gtk-engine-murrine
-  #nwg-look
-  #adw-gtk-theme
-  #breeze-icons
-  #kvantum
-  #qt5ct
-  #qt6ct
+  wl-clipboard
+  xclip
   libfido2
   udisks2
   yubikey-touch-detector
   openbsd-netcat
 )
 
+# Dux-Ökosystem aus dem AUR
 packages_yay=(
-  nmgui-bin
-  #swww-git
-  #pyprland
-  #wallust
-  #wlr-layout-ui
+  dux-files-bin
+  dux-search-bin
+  dux-calendar-bin
+  dux-gop-git
+  dux-greeter-bin
 )
 
-sddm_conf_dir=/etc/sddm.conf.d
+# Terminal, für das Dux Config + Theme deployt (ghostty | kitty | alacritty)
+DUX_TERMINAL=kitty
 
-create_symlink "$SCRIPT_DIR/config/hyprland" "$HOME/.config/hypr"
+HYPR_DIR="$HOME/.config/hypr"
+HYPR_REPO="$SCRIPT_DIR/config/hyprland"
+USER_HOOK='require("user.main")'
 
 if $FEDORA; then
   for pkg in "${copr_pkgs[@]}"; do
@@ -104,57 +70,53 @@ if $ARCH; then
   done
 fi
 
-# Rofi
-create_symlink "$SCRIPT_DIR/config/rofi" "$HOME/.config/rofi"
+# --- ~/.config/hypr ----------------------------------------------------------
+# hyprland.lua und dms/*.lua gehören Dux. Aus dem Repo kommen nur user/ und
+# scripts/, eingebunden über eine require-Zeile am Ende von hyprland.lua.
 
-# SwayNC
-create_symlink "$SCRIPT_DIR/config/swaync" "$HOME/.config/swaync"
-
-# Wallust
-create_symlink "$SCRIPT_DIR/config/wallust" "$HOME/.config/wallust"
-
-# Waybar
-create_symlink "$SCRIPT_DIR/config/waybar" "$HOME/.config/waybar"
-
-# You need to be in the input group to be able to access the keyboard state
-sudo usermod -aG input $USER
-
-# Link hostfile config:waybar
-if [ ! -f "$SCRIPT_DIR/config/hyprland/configs/hosts/$HOSTNAME.conf" ]; then
-  touch "$SCRIPT_DIR/config/hyprland/configs/hosts/$HOSTNAME.conf"
+# Altes Layout: ganzes Verzeichnis war ein Symlink ins Repo
+if [ -L "$HYPR_DIR" ]; then
+  log "INFO" "Removing old symlink $HYPR_DIR"
+  rm "$HYPR_DIR"
+fi
+# Zwischenstand: hyprland.lua als Symlink ins Repo
+if [ -L "$HYPR_DIR/hyprland.lua" ]; then
+  rm "$HYPR_DIR/hyprland.lua"
 fi
 
-create_symlink "$SCRIPT_DIR/config/hyprland/configs/hosts/$HOSTNAME.conf" "$HOME/.config/hypr/configs/current_host.conf"
+ensure_directories "$HYPR_DIR"
 
-#create_symlink "$SCRIPT_DIR/config/hyprland/scripts/clipboard_sync.sh" "$HOME/.local/bin/clipsync"
+# Alte hyprlang-Config sichern
+if [ -f "$HYPR_DIR/hyprland.conf" ]; then
+  mv "$HYPR_DIR/hyprland.conf" "$HYPR_DIR/hyprland.conf.bak.$(date +%s)"
+fi
 
-# Screenshot dir
-ensure_directories "$HOME/Pictures/screenshots/"
+create_symlink "$HYPR_REPO/user" "$HYPR_DIR/user"
+create_symlink "$HYPR_REPO/scripts" "$HYPR_DIR/scripts"
 
-# SDDM
-sudo git clone -b master --depth 1 https://github.com/keyitdev/sddm-astronaut-theme.git /usr/share/sddm/themes/sddm-astronaut-theme
-sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
+# Dux-Stock-Config deployen (bestehende Dateien bleiben unangetastet)
+if command -v dms &>/dev/null; then
+  dms setup headless --compositor hyprland --terminal "$DUX_TERMINAL" --skip-existing ||
+    log "WARNING" "dms setup failed"
+else
+  log "ERROR" "dms not found, Dux Shell not installed?"
+fi
 
-echo "[Theme]
-Current=sddm-astronaut-theme" | sudo tee /etc/sddm.conf
+# Eigene Config einhängen (idempotent, überlebt `dms setup --force` durch erneuten Lauf)
+if [ -f "$HYPR_DIR/hyprland.lua" ] && ! grep -qF "$USER_HOOK" "$HYPR_DIR/hyprland.lua"; then
+  printf '\n-- Dotfiles: eigene Ergänzungen (~/.config/hypr/user)\n%s\n' "$USER_HOOK" >>"$HYPR_DIR/hyprland.lua"
+  log "SUCCESS" "Added $USER_HOOK to hyprland.lua"
+fi
 
-sudo cat <<EOF | sudo tee /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
-[SddmGreeterTheme]
-Name=sddm-astronaut-theme
-Description=sddm-astronaut-theme
-Author=keyitdev
-Website=https://github.com/Keyitdev/sddm-astronaut-theme
-License=GPL-3.0-or-later
-Type=sddm-theme
-Version=1.3
-ConfigFile=Themes/post-apocalyptic_hacker.conf
-Screenshot=Previews/astronaut.png
-MainScript=Main.qml
-TranslationsDirectory=translations
-Theme-Id=sddm-astronaut-theme
-Theme-API=2.0
-QtVersion=6
-EOF
+# --- Dux Files als Standard-Dateimanager ------------------------------------
+if command -v dfiles &>/dev/null; then
+  xdg-mime default dev.duxlabs.files.desktop inode/directory
+fi
+
+# --- Dux Greeter (ersetzt SDDM/GDM durch greetd) ----------------------------
+if command -v dms-greeter &>/dev/null && ! systemctl is-enabled -q greetd 2>/dev/null; then
+  dms-greeter install
+fi
 
 systemctl --user daemon-reload
 systemctl --user enable --now yubikey-touch-detector.service

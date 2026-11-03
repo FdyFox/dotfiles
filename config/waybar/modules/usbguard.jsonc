@@ -1,9 +1,0 @@
-{
-    "custom/usbguard": {
-        "format": "<span color='#202020' bgcolor='#1d81b4'> </span> {}",
-        "exec": "$HOME/.config/hypr/scripts/waybar_usbguard.sh",
-        "return-type": "json",
-        "on-click": "$HOME/.config/hypr/scripts/waybar_usbguard.sh allow",
-        "on-click-right": "$HOME/.config/hypr/scripts/waybar_usbguard.sh reject"
-    }
-}

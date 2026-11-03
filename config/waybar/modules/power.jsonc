@@ -1,7 +1,0 @@
-{
-    "custom/power": {
-        "format": "<span color='#202020' bgcolor='#d3869b'> ⏻ </span>",
-        "tooltip": false,
-        "on-click": "$HOME/.config/rofi/applets/bin/powermenu.sh"
-    }
-}

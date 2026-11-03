@@ -1,8 +1,0 @@
-{
-    "custom/logout": {
-        "format": " ",
-        "on-click": "hyprctl dispatch exit",
-        "tooltip": true,
-        "tooltip-format": "Logout"
-    }
-}

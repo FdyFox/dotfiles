@@ -22,7 +22,6 @@ packages_arch=(
 )
 
 packages_yay=(
-  nmgui-bin
   #swww-git
   #pyprland
   #wallust
