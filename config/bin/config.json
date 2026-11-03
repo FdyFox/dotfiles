@@ -7,8 +7,9 @@
             "version": "v0.24.2",
             "hash": "55471bae467cdd775a0ea73b71d37061fdf24185b15dadeb68a61638c43101b5",
             "url": "https://github.com/marcosnils/bin/releases/tag/v0.24.2",
-            "provider": "",
+            "provider": "github",
             "package_path": "",
+            "selected_asset": "bin_0.24.2_linux_amd64",
             "pinned": false
         },
         "/home/bergefe/.local/bin/lazyssh": {
@@ -17,8 +18,9 @@
             "version": "v0.3.0",
             "hash": "6f125adf71446879211e912afb43dce6d40d6f388940c266212936750dcb5037",
             "url": "https://github.com/Adembc/lazyssh/releases/tag/v0.3.0",
-            "provider": "",
+            "provider": "github",
             "package_path": "lazyssh",
+            "selected_asset": "lazyssh_Linux_x86_64.tar.gz",
             "pinned": false
         },
         "/home/bergefe/.local/bin/pangolin-cli": {
@@ -29,6 +31,7 @@
             "url": "https://github.com/fosrl/cli/releases",
             "provider": "github",
             "package_path": "",
+            "selected_asset": "pangolin-cli_linux_amd64",
             "pinned": false
         }
     }

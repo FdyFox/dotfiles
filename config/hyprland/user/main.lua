@@ -12,6 +12,7 @@ require("user.settings")
 require("user.autostart")
 require("user.keybinds")
 require("user.windowrules")
+require("user.layout")
 
 -- Host-spezifisches: user/hosts/<hostname>.lua (optional)
 local function hostname()

@@ -13,10 +13,10 @@ end
 ----------------
 
 -- Maximize-Requests von Apps ignorieren
-rule({ class = ".*" }, { suppress_event = "maximize" })
+-- rule({ class = ".*" }, { suppress_event = "maximize" })
 
 -- XWayland Drag-Fix
-rule({ class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false }, { no_focus = true })
+-- rule({ class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false }, { no_focus = true })
 
 -- Kein Idle/Lock bei Vollbild
 rule({ class = ".*" }, { idle_inhibit = "fullscreen" })

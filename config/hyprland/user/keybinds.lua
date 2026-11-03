@@ -14,3 +14,14 @@ rebind("SUPER + Q", hl.dsp.exec_cmd(terminal))
 
 -- Fenster schließen auf SUPER + C (wie bisher)
 rebind("SUPER + C", hl.dsp.window.close())
+
+-- Manual Sizing
+rebind("SUPER + minus", hl.dsp.window.resize({ x = -100, y = 0, relative = true }), { repeating = true })
+rebind("SUPER + plus", hl.dsp.window.resize({ x = 100, y = 0, relative = true }), { repeating = true })
+
+rebind("SUPER + SHIFT + minus", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true })
+rebind("SUPER + SHIFT + plus", hl.dsp.window.resize({ x = 0, y = 100, relative = true }), { repeating = true })
+
+-- Wallpaper-Karussell auf SUPER + W
+rebind("SUPER + W", hl.dsp.exec_cmd("dms ipc call wallpaperCarousel toggle"))
+
