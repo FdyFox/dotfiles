@@ -63,6 +63,7 @@ server_scripts=(
   "10_starship.sh"
   "10_tmux.sh"
   "10_vscode_server.sh"
+  "10_claude_code.sh"
   "99_cleanup.sh"
 )
 

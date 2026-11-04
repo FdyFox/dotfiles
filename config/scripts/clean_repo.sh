@@ -12,6 +12,7 @@ rm -rf config/zsh/zshrc.work
 rm -rf config/hosts/*
 rm -rf config/olm/*
 rm -rf config/kde/*
+rm -rf config/claude/CLAUDE.md
 
 echo "Add keep and dummy files"
 touch config/git/gitconfig.work
@@ -21,6 +22,12 @@ touch config/zsh/alias
 touch config/zsh/zshrc.work
 touch config/hosts/.gitkeep
 touch config/kde/.gitkeep
+
+cat <<EOT >config/claude/CLAUDE.md
+# Global instructions for Claude Code
+
+- Add your personal rules here.
+EOT
 
 cat <<EOT >config/zsh/alias
 #!/usr/bin/env bash

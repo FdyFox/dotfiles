@@ -58,6 +58,7 @@ In server mode only the scripts listed in `server_scripts` in `bootstrap.sh` are
 - `10_zsh.sh`: oh-my-zsh with `zshrc.server`, `alias.server` and `custom_env.server`
 - `10_starship.sh`, `10_tmux.sh`
 - `10_vscode_server.sh`: VS Code settings for Remote-SSH / code-server
+- `10_claude_code.sh`: Claude Code CLI and the global `~/.claude/CLAUDE.md`
 - `99_cleanup.sh`: keeps the https remote
 
 No GUI tools, no mise, no 1Password, no SSH config.
